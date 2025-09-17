@@ -22,5 +22,28 @@
       <artifactId>webdrivermanager</artifactId>
       <version>5.9.2</version>
     </dependency>
+
+    <!-- Logger (optional, removes SLF4J warnings) -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>2.0.13</version>
+    </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Exec plugin lets us run Java classes with main() -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <!-- Default class to run -->
+          <mainClass>com.demo.Demo</mainClass>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>

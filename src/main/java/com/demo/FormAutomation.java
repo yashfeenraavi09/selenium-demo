@@ -4,58 +4,52 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+import java.time.Duration;
+
 public class FormAutomation {
-    public static void main(String[] args) throws InterruptedException {
-        // Setup ChromeDriver automatically
+    public static void main(String[] args) {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
-
-        // Open form page
-        driver.get("https://www.techlistic.com/p/selenium-practice-form.html");
         driver.manage().window().maximize();
+        driver.get("https://www.techlistic.com/p/selenium-practice-form.html");
 
-        // Fill first name
-        WebElement firstName = driver.findElement(By.name("firstname"));
-        firstName.sendKeys("Yashfeen");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
 
-        // Fill last name
-        WebElement lastName = driver.findElement(By.name("lastname"));
-        lastName.sendKeys("Raavi");
+        try {
+            WebElement firstName = wait.until(
+                    ExpectedConditions.visibilityOfElementLocated(By.name("firstname")));
+            firstName.sendKeys("John");
 
-        // Select gender (Female)
-        WebElement genderMale = driver.findElement(By.id("sex-1"));
-        genderMale.click();
+            WebElement lastName = driver.findElement(By.name("lastname"));
+            lastName.sendKeys("Doe");
 
-        // Select experience (5 years)
-        WebElement exp = driver.findElement(By.id("exp-4"));
-        exp.click();
+            WebElement genderMale = driver.findElement(By.id("sex-0"));
+            js.executeScript("arguments[0].click();", genderMale);
 
-        // Fill date
-        WebElement date = driver.findElement(By.id("datepicker"));
-        date.sendKeys("16-09-2025");
+            WebElement exp = driver.findElement(By.id("exp-4"));
+            js.executeScript("arguments[0].click();", exp);
 
-        // Select profession (Automation Tester)
-        WebElement profession = driver.findElement(By.id("profession-1"));
-        profession.click();
+            WebElement date = driver.findElement(By.id("datepicker"));
+            date.sendKeys("17-09-2025");
 
-        // Select tool 
-        WebElement tool = driver.findElement(By.id("tool-2"));
-        tool.click();
+            WebElement profession = driver.findElement(By.id("profession-1"));
+            js.executeScript("arguments[0].scrollIntoView(true);", profession);
+            js.executeScript("arguments[0].click();", profession);
 
-        // Select continent (Europe)
-        WebElement continent = driver.findElement(By.id("continents"));
-        continent.sendKeys("Europe");
+            WebElement tool = driver.findElement(By.id("tool-2"));
+            js.executeScript("arguments[0].click();", tool);
 
-        // Click submit button
-        WebElement submitBtn = driver.findElement(By.id("submit"));
-        submitBtn.click();
-
-        // Wait a bit to see result
-        Thread.sleep(3000);
-
-        // Close browser
-        driver.quit();
+            System.out.println("Form filled successfully!");
+        } catch (Exception e) {
+            System.out.println("Test failed: " + e.getMessage());
+        } finally {
+            driver.quit();
+        }
     }
 }
