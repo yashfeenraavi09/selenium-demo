@@ -40,7 +40,7 @@
         <version>3.1.0</version>
         <configuration>
           <!-- Default class to run -->
-          <mainClass>com.demo.FormAutomation</mainClass>
+          <mainClass>com.demo.Demo</mainClass>
         </configuration>
       </plugin>
     </plugins>
